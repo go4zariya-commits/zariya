@@ -2,113 +2,787 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#2c1206"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <title>Zariya — Traditional Wear</title>
-  <link rel="stylesheet" href="css/style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    /* ═══════════════════════════════════════════════
+       ZARIYA BOUTIQUE — Mobile-First Single File
+       ═══════════════════════════════════════════════ */
+
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
+
+    :root {
+      --ink:       #100800;
+      --brown:     #2c1206;
+      --brown2:    #5c2f10;
+      --gold:      #b8862a;
+      --gold-lt:   #d4a84b;
+      --gold-pale: #f0deb0;
+      --cream:     #faf4ea;
+      --cream2:    #f3e8d4;
+      --cream3:    #ecdcc0;
+      --muted:     #7a5030;
+      --border:    rgba(184,134,42,0.2);
+      --border2:   rgba(184,134,42,0.45);
+      --ff-display:'Playfair Display', Georgia, serif;
+      --ff-serif:  'Cormorant Garamond', Georgia, serif;
+      --ff-sans:   'Jost', sans-serif;
+      --tap: 48px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--ff-sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+      overscroll-behavior-y: none;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { -webkit-tap-highlight-color: transparent; }
+
+    /* Grain */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.022; pointer-events: none; z-index: 9999;
+    }
+
+    /* ── PAGE TRANSITIONS ── */
+    .page { display: none; }
+    .page.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── HEADER ── */
+    .site-header {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--cream);
+      border-bottom: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.2rem; height: 60px;
+    }
+    .site-header::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--gold-lt), var(--gold), transparent);
+    }
+
+    .logo-link { text-decoration: none; display: flex; align-items: center; cursor: pointer; }
+    .logo-mark { display: flex; align-items: center; gap: 0.5rem; }
+    .logo-deva { font-family: 'Noto Serif Devanagari', serif; font-size: 1.7rem; color: var(--brown); line-height: 1; }
+    .logo-wordmark { border-left: 1px solid var(--border2); padding-left: 0.55rem; display: flex; flex-direction: column; }
+    .logo-text { font-family: var(--ff-display); font-size: 1.1rem; font-weight: 500; color: var(--brown); letter-spacing: 0.06em; line-height: 1.1; }
+    .logo-sub  { font-family: var(--ff-sans); font-size: 0.45rem; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; }
+
+    .nav-toggle {
+      background: none; border: 1px solid var(--border2); color: var(--brown);
+      width: var(--tap); height: var(--tap); display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; cursor: pointer; -webkit-tap-highlight-color: transparent; flex-shrink: 0;
+    }
+
+    .nav-list {
+      display: none; position: fixed; top: 60px; left: 0; right: 0;
+      background: var(--cream); border-bottom: 2px solid var(--border2);
+      flex-direction: column; list-style: none; z-index: 199;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      animation: slideDown 0.22s ease both;
+    }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+    .nav-list.open { display: flex; }
+    .nav-list li { border-bottom: 1px solid var(--border); }
+    .nav-list li:last-child { border-bottom: none; }
+    .nav-list a {
+      display: flex; align-items: center; height: var(--tap); padding: 0 1.5rem;
+      font-family: var(--ff-sans); font-size: 0.75rem; font-weight: 300;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--brown2);
+      text-decoration: none; cursor: pointer; transition: color 0.2s, background 0.2s;
+    }
+    .nav-list a:active, .nav-list a.active { color: var(--gold); background: var(--cream2); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 3rem 1.5rem 2.5rem; text-align: center;
+      position: relative; overflow: hidden; background: var(--cream);
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(-45deg, transparent, transparent 24px, rgba(184,134,42,0.04) 24px, rgba(184,134,42,0.04) 25px);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: var(--ff-sans); font-size: 0.58rem; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem;
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+    .hero-deva { font-family: 'Noto Serif Devanagari', serif; font-size: clamp(4.5rem, 22vw, 7rem); color: var(--brown); line-height: 0.9; margin-bottom: 0.1rem; }
+    .hero-title { font-family: var(--ff-display); font-size: clamp(2.2rem, 10vw, 3.5rem); font-weight: 400; color: var(--brown); letter-spacing: 0.18em; text-transform: uppercase; line-height: 1; margin-bottom: 1rem; }
+
+    .hero-ornament { display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin: 0.8rem auto 1rem; max-width: 260px; }
+    .hero-ornament-line { flex: 1; height: 1px; background: var(--border2); }
+    .hero-ornament-bloom { width: 20px; height: 20px; position: relative; }
+    .hero-ornament-bloom::before, .hero-ornament-bloom::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--gold); opacity: 0.6; }
+    .hero-ornament-bloom::after { transform: rotate(45deg) scale(0.65); }
+
+    .hero-desc { font-family: var(--ff-serif); font-size: 1rem; color: var(--muted); font-style: italic; margin: 0 auto 2rem; max-width: 300px; line-height: 1.9; }
+    .hero-actions { display: flex; flex-direction: column; gap: 0.8rem; align-items: center; }
+
+    .btn-primary {
+      font-family: var(--ff-sans); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--cream); background: var(--brown); border: 1px solid var(--brown);
+      padding: 0 2rem; height: var(--tap); display: inline-flex; align-items: center;
+      text-decoration: none; min-width: 180px; justify-content: center;
+      cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background 0.25s;
+    }
+    .btn-primary:active { background: var(--gold); border-color: var(--gold); }
+
+    .btn-ghost {
+      font-family: var(--ff-sans); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--brown2); text-decoration: none; border-bottom: 1px solid var(--border2);
+      padding-bottom: 2px; height: var(--tap); display: inline-flex; align-items: center;
+      cursor: pointer;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-strip { background: var(--brown); overflow: hidden; padding: 0.65rem 0; }
+    .marquee-inner { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
+    .marquee-inner span { font-family: var(--ff-sans); font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-pale); padding: 0 1.8rem; }
+    .marquee-inner .dot { color: var(--gold); padding: 0; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── COLLECTIONS GRID ── */
+    .collections { padding: 2.8rem 1.2rem 4rem; }
+    .section-header { margin-bottom: 1.8rem; text-align: center; }
+    .section-label { font-family: var(--ff-sans); font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .section-title { font-family: var(--ff-display); font-size: 1.7rem; font-weight: 400; color: var(--brown); }
+
+    .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+    .cat-tile {
+      background: var(--cream2); border: 1px solid var(--border); overflow: hidden;
+      text-decoration: none; display: flex; flex-direction: column; position: relative;
+      cursor: pointer; -webkit-tap-highlight-color: transparent; transition: border-color 0.25s; border-radius: 2px;
+    }
+    .cat-tile:active { border-color: var(--gold); }
+    .cat-tile-art {
+      height: 130px; background: var(--cream3); display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .cat-tile-art::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 14px, rgba(184,134,42,0.05) 14px, rgba(184,134,42,0.05) 15px);
+    }
+    .cat-tile-art svg { position: relative; z-index: 1; opacity: 0.5; }
+    .cat-tile-body { padding: 0.8rem 0.9rem 1.2rem; border-top: 1px solid var(--border); }
+    .cat-tile-name { font-family: var(--ff-display); font-size: 0.92rem; color: var(--brown); margin-bottom: 0.15rem; line-height: 1.2; }
+    .cat-tile-sub  { font-family: var(--ff-serif); font-size: 0.72rem; color: var(--muted); font-style: italic; line-height: 1.4; }
+    .cat-tile-arrow { position: absolute; bottom: 0.7rem; right: 0.7rem; font-size: 0.75rem; color: var(--gold); }
+
+    /* ── CATEGORY BANNER ── */
+    .page-banner {
+      background: var(--brown); padding: 3rem 1.5rem 2.5rem;
+      position: relative; overflow: hidden; min-height: 200px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .page-banner::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(-45deg, transparent, transparent 28px, rgba(255,255,255,0.018) 28px, rgba(255,255,255,0.018) 29px);
+    }
+    .page-banner::after { content: ''; position: absolute; inset: 1rem; border: 1px solid rgba(184,134,42,0.25); pointer-events: none; }
+    .banner-deva { position: absolute; right: 1rem; bottom: -1.5rem; font-family: 'Noto Serif Devanagari', serif; font-size: 7rem; color: rgba(255,255,255,0.05); line-height: 1; user-select: none; }
+    .banner-content { position: relative; z-index: 2; }
+    .banner-label { font-family: var(--ff-sans); font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-lt); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.6rem; }
+    .banner-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--gold-lt); }
+    .banner-title { font-family: var(--ff-display); font-size: clamp(1.8rem, 7vw, 2.8rem); color: var(--cream); font-weight: 400; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+    .banner-desc  { font-family: var(--ff-serif); font-size: 0.9rem; color: rgba(240,222,176,0.6); font-style: italic; }
+
+    .breadcrumb {
+      padding: 0.75rem 1.5rem; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.4rem;
+    }
+    .breadcrumb span.bc-link { cursor: pointer; }
+    .breadcrumb span.bc-link:hover { color: var(--gold); }
+
+    /* ── GALLERY ── */
+    .gallery-section { padding: 1.5rem 0.9rem 5rem; }
+    .gallery-meta { padding: 0 0.3rem; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
+    .gallery-count { font-family: var(--ff-sans); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+    .gallery-divider { flex: 1; height: 1px; background: var(--border); }
+
+    .loading-state { display: flex; flex-direction: column; align-items: center; padding: 5rem 2rem; gap: 1rem; color: var(--muted); }
+    .loading-spinner { width: 32px; height: 32px; border: 2px solid var(--border2); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.85s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-family: var(--ff-sans); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+
+    .error-state, .empty-state { text-align: center; padding: 4rem 1.5rem; border: 1px dashed var(--border2); margin: 1rem; }
+    .error-state h3 { font-family: var(--ff-display); font-size: 1.3rem; color: var(--brown); margin-bottom: 0.6rem; }
+    .error-state p, .empty-state p { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.4rem; line-height: 1.7; }
+    .error-state code { font-size: 0.7rem; background: var(--cream2); padding: 0.1rem 0.4rem; color: #b85c20; border-radius: 2px; }
+
+    .image-grid { columns: 2; column-gap: 0.7rem; }
+    .image-card {
+      break-inside: avoid; margin-bottom: 0.7rem; position: relative; overflow: hidden;
+      background: var(--cream2); border: 1px solid var(--border); cursor: pointer;
+      border-radius: 2px; -webkit-tap-highlight-color: transparent; transition: border-color 0.25s;
+    }
+    .image-card:active { border-color: var(--gold-lt); }
+    .image-card img { width: 100%; display: block; object-fit: cover; }
+    .image-card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(16,8,0,0.75) 0%, transparent 55%);
+      display: flex; align-items: flex-end; padding: 0.6rem 0.5rem;
+    }
+    .image-card-caption { font-family: var(--ff-serif); font-size: 0.75rem; font-style: italic; color: var(--gold-pale); letter-spacing: 0.02em; line-height: 1.3; word-break: break-word; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(10,5,0,0.97); z-index: 9998; flex-direction: column; align-items: center; justify-content: center; overscroll-behavior: contain; }
+    .lightbox.active { display: flex; }
+    .lb-img-wrap { position: relative; width: 100%; max-height: 72vh; display: flex; align-items: center; justify-content: center; }
+    .lightbox img { max-width: 96vw; max-height: 72vh; object-fit: contain; display: block; transition: opacity 0.2s; }
+    .lb-controls { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; pointer-events: none; padding: 0 0.5rem; }
+    .lb-btn { pointer-events: all; background: rgba(16,8,0,0.55); border: 1px solid rgba(184,134,42,0.2); color: var(--gold-pale); font-size: 1.4rem; width: 44px; height: 64px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 2px; -webkit-tap-highlight-color: transparent; }
+    .lb-btn:active { background: var(--gold); color: var(--ink); }
+    .lb-close { position: fixed; top: 1rem; right: 1rem; background: rgba(16,8,0,0.6); border: 1px solid rgba(184,134,42,0.25); color: var(--gold-lt); font-size: 1.4rem; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 2px; z-index: 9999; -webkit-tap-highlight-color: transparent; }
+    .lb-footer { margin-top: 1rem; padding: 0 1.5rem; text-align: center; display: flex; flex-direction: column; gap: 0.25rem; max-width: 96vw; }
+    .lb-caption { font-family: var(--ff-serif); font-size: 0.95rem; font-style: italic; color: var(--gold-pale); letter-spacing: 0.04em; line-height: 1.4; }
+    .lb-counter { font-family: var(--ff-sans); font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(240,222,176,0.35); }
+
+    /* ── FOOTER ── */
+    .site-footer { background: var(--brown); padding: 3rem 1.5rem 2rem; position: relative; }
+    .site-footer::before { content: ''; position: absolute; top: 0; left: 1.5rem; right: 1.5rem; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .footer-brand { text-align: center; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(184,134,42,0.15); }
+    .footer-deva { font-family: 'Noto Serif Devanagari', serif; font-size: 2.2rem; color: var(--gold-pale); line-height: 1; margin-bottom: 0.2rem; }
+    .footer-name { font-family: var(--ff-display); font-size: 1.1rem; color: var(--cream2); letter-spacing: 0.1em; margin-bottom: 0.6rem; }
+    .footer-brand p { font-family: var(--ff-serif); font-size: 0.85rem; font-style: italic; color: rgba(240,222,176,0.45); line-height: 1.8; max-width: 280px; margin: 0 auto; }
+    .footer-links { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+    .footer-col h4 { font-family: var(--ff-sans); font-size: 0.56rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold-lt); margin-bottom: 0.8rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .footer-col a { font-family: var(--ff-sans); font-size: 0.75rem; color: rgba(240,222,176,0.5); text-decoration: none; letter-spacing: 0.04em; min-height: var(--tap); display: flex; align-items: center; cursor: pointer; }
+    .footer-col a:active { color: var(--gold-lt); }
+    .footer-bottom { border-top: 1px solid rgba(184,134,42,0.12); padding-top: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
+    .footer-copy { font-size: 0.58rem; letter-spacing: 0.1em; color: rgba(240,222,176,0.25); text-transform: uppercase; }
+    .footer-ornament { font-family: 'Noto Serif Devanagari', serif; font-size: 1rem; color: rgba(184,134,42,0.25); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { animation: fadeUp 0.55s ease both; }
+    .fade-up:nth-child(1) { animation-delay: 0.04s; }
+    .fade-up:nth-child(2) { animation-delay: 0.10s; }
+    .fade-up:nth-child(3) { animation-delay: 0.16s; }
+    .fade-up:nth-child(4) { animation-delay: 0.22s; }
+    .fade-up:nth-child(5) { animation-delay: 0.28s; }
+    .fade-up:nth-child(6) { animation-delay: 0.34s; }
+    .fade-up:nth-child(7) { animation-delay: 0.40s; }
+    .fade-up:nth-child(8) { animation-delay: 0.46s; }
+
+    /* ── TABLET ── */
+    @media (min-width: 600px) {
+      .site-header { padding: 0 2rem; }
+      .hero { padding: 4rem 3rem 3.5rem; }
+      .cat-grid { grid-template-columns: repeat(3, 1fr); }
+      .image-grid { columns: 3; }
+      .gallery-section { padding: 2rem 2rem 5rem; }
+      .collections { padding: 3.5rem 2rem 5rem; }
+    }
+
+    /* ── DESKTOP ── */
+    @media (min-width: 960px) {
+      .site-header { padding: 0 4rem; height: 68px; }
+      .nav-toggle { display: none; }
+      .nav-list {
+        display: flex !important; position: static; flex-direction: row;
+        border: none; box-shadow: none; animation: none; gap: 2rem; background: transparent;
+      }
+      .nav-list li { border: none; }
+      .nav-list a {
+        height: auto; padding: 0; position: relative; background: transparent !important;
+      }
+      .nav-list a::after {
+        content: ''; position: absolute; bottom: -2px; left: 50%;
+        transform: translateX(-50%); width: 0; height: 1px; background: var(--gold); transition: width 0.3s;
+      }
+      .nav-list a:hover { color: var(--gold); }
+      .nav-list a:hover::after, .nav-list a.active::after { width: 100%; }
+
+      .hero { display: grid; grid-template-columns: 1fr 1fr; text-align: left; padding: 0; min-height: 86vh; align-items: stretch; }
+      .hero-left { padding: 6rem 5rem 6rem 7rem; display: flex; flex-direction: column; justify-content: center; }
+      .hero-eyebrow { justify-content: flex-start; }
+      .hero-actions { flex-direction: row; }
+      .hero-ornament { margin: 0.8rem 0 1rem; }
+
+      .hero-right {
+        display: flex; align-items: center; justify-content: center;
+        background: var(--cream2); position: relative; overflow: hidden; min-height: 86vh;
+      }
+      .hero-right::before { content: ''; position: absolute; inset: 3rem; border: 1px solid var(--border2); pointer-events: none; z-index: 2; }
+      .hero-right::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-45deg, transparent, transparent 28px, rgba(184,134,42,0.04) 28px, rgba(184,134,42,0.04) 29px); }
+      .hero-mandala { position: absolute; width: 520px; height: 520px; opacity: 0.13; z-index: 1; }
+      .hero-badge { position: relative; z-index: 3; text-align: center; }
+      .hero-badge-deva { font-family: 'Noto Serif Devanagari', serif; font-size: 11rem; color: var(--brown); opacity: 0.15; line-height: 1; }
+      .hero-pills { position: absolute; bottom: 5rem; left: 0; right: 0; display: flex; justify-content: center; gap: 1rem; z-index: 3; }
+      .hero-pill { font-family: var(--ff-sans); font-size: 0.56rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border2); padding: 0.35rem 0.9rem; background: var(--cream); }
+
+      .image-card-overlay { opacity: 0; transition: opacity 0.3s; }
+      .image-card:hover .image-card-overlay { opacity: 1; }
+      .image-card:hover img { transform: scale(1.04); }
+      .image-card img { transition: transform 0.5s ease; }
+
+      .image-grid { columns: 4; column-gap: 1rem; }
+      .image-card { margin-bottom: 1rem; }
+      .cat-tile-art { height: 180px; }
+      .collections { padding: 6rem 5rem; max-width: 1400px; margin: 0 auto; }
+      .gallery-section { padding: 3rem 4rem 7rem; max-width: 1400px; margin: 0 auto; }
+      .page-banner { padding: 5rem 7rem; min-height: 280px; flex-direction: row; align-items: flex-end; }
+      .breadcrumb { padding: 1rem 7rem; }
+      .footer-links { grid-template-columns: 1fr 1fr 1fr; }
+      .footer-brand { text-align: left; }
+      .footer-brand p { margin: 0; }
+      .site-footer { padding: 4rem 5rem 2.5rem; }
+      .btn-primary:hover { background: var(--gold); border-color: var(--gold); }
+    }
+  </style>
 </head>
 <body>
 
+  <!-- ── HEADER ── -->
   <header class="site-header">
-    <a href="index.html" class="logo-link">
+    <div class="logo-link" onclick="navigate('home')">
       <div class="logo-mark">
-        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" class="logo-svg">
-          <text x="100" y="52" text-anchor="middle" font-family="'Noto Serif Devanagari','Noto Serif',serif" font-size="48" fill="#2e1504">ज़</text>
-        </svg>
-        <span class="logo-text">Zariya</span>
-        <span class="logo-sub">Traditional Wear</span>
+        <span class="logo-deva">ज़</span>
+        <div class="logo-wordmark">
+          <span class="logo-text">Zariya</span>
+          <span class="logo-sub">Traditional Wear</span>
+        </div>
       </div>
-    </a>
+    </div>
     <nav class="main-nav">
-      <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+      <button class="nav-toggle" onclick="toggleNav()" aria-label="Open menu">&#9776;</button>
       <ul class="nav-list" id="navList">
-        <li><a href="pages/straight-suits.html">Straight Suits</a></li>
-        <li><a href="pages/anarkali.html">Anarkali</a></li>
-        <li><a href="pages/long-kurtis.html">Long Kurtis</a></li>
-        <li><a href="pages/short-kurtis.html">Short Kurtis</a></li>
-        <li><a href="pages/aline-suits.html">A-line Suits</a></li>
-        <li><a href="pages/party-wear.html">Party Wear</a></li>
+        <li><a onclick="navigate('straight-suits')">Straight Suits</a></li>
+        <li><a onclick="navigate('anarkali')">Anarkali</a></li>
+        <li><a onclick="navigate('long-kurtis')">Long Kurtis</a></li>
+        <li><a onclick="navigate('short-kurtis')">Short Kurtis</a></li>
+        <li><a onclick="navigate('aline-suits')">A-line Suits</a></li>
+        <li><a onclick="navigate('party-wear')">Party Wear</a></li>
       </ul>
     </nav>
   </header>
 
-  <main>
+  <!-- ══════════════════════════════════════
+       PAGE: HOME
+  ══════════════════════════════════════ -->
+  <div id="page-home" class="page active">
     <section class="hero">
-      <div class="hero-ornament top">
-        <svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20,20 Q200,2 380,20" stroke="#9a6b1a" stroke-width="0.8" fill="none" opacity="0.6"/>
-          <path d="M40,26 Q200,12 360,26" stroke="#9a6b1a" stroke-width="0.4" fill="none" opacity="0.35"/>
-          <polygon points="200,5 204,11 200,17 196,11" fill="#9a6b1a" opacity="0.7"/>
-        </svg>
+      <div class="hero-left">
+        <p class="hero-eyebrow">New Collection 2026</p>
+        <div class="hero-deva">ज़</div>
+        <h1 class="hero-title">Zariya</h1>
+        <div class="hero-ornament">
+          <div class="hero-ornament-line"></div>
+          <div class="hero-ornament-bloom"></div>
+          <div class="hero-ornament-line"></div>
+        </div>
+        <p class="hero-desc">Where heritage meets haute — handpicked traditional wear crafted for the modern woman.</p>
+        <div class="hero-actions">
+          <span class="btn-primary" onclick="navigate('party-wear')">Explore Collection</span>
+          <span class="btn-ghost" onclick="navigate('anarkali')">View Anarkali →</span>
+        </div>
       </div>
-
-      <div class="hero-deva">ज़</div>
-      <h1 class="hero-title">Zariya</h1>
-      <p class="hero-tagline">T R A D I T I O N A L &nbsp; W E A R</p>
-
-      <div class="hero-ornament bottom">
-        <svg viewBox="0 0 400 40" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20,20 Q200,38 380,20" stroke="#9a6b1a" stroke-width="0.8" fill="none" opacity="0.6"/>
-          <path d="M40,14 Q200,28 360,14" stroke="#9a6b1a" stroke-width="0.4" fill="none" opacity="0.35"/>
-          <polygon points="200,35 204,29 200,23 196,29" fill="#9a6b1a" opacity="0.7"/>
+      <div class="hero-right">
+        <svg class="hero-mandala" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(260,260)" stroke="#9a6b1a" fill="none">
+            <circle r="230" stroke-width="0.5" stroke-dasharray="4,10" opacity="0.5"/>
+            <circle r="190" stroke-width="0.3" opacity="0.4"/>
+            <circle r="140" stroke-width="0.5" stroke-dasharray="2,6" opacity="0.5"/>
+            <circle r="90"  stroke-width="0.3" opacity="0.4"/>
+            <ellipse cx="0" cy="-170" rx="12" ry="40" opacity="0.6"/>
+            <ellipse cx="0" cy="170"  rx="12" ry="40" opacity="0.6"/>
+            <ellipse cx="-170" cy="0" rx="40" ry="12" opacity="0.6"/>
+            <ellipse cx="170"  cy="0" rx="40" ry="12" opacity="0.6"/>
+            <ellipse cx="-120" cy="-120" rx="12" ry="36" transform="rotate(-45,-120,-120)" opacity="0.5"/>
+            <ellipse cx="120"  cy="-120" rx="12" ry="36" transform="rotate(45,120,-120)"  opacity="0.5"/>
+            <ellipse cx="-120" cy="120"  rx="12" ry="36" transform="rotate(45,-120,120)"  opacity="0.5"/>
+            <ellipse cx="120"  cy="120"  rx="12" ry="36" transform="rotate(-45,120,120)"  opacity="0.5"/>
+            <ellipse cx="0" cy="-80" rx="7" ry="22" opacity="0.7" fill="#9a6b1a"/>
+            <ellipse cx="0" cy="80"  rx="7" ry="22" opacity="0.7" fill="#9a6b1a"/>
+            <ellipse cx="-80" cy="0" rx="22" ry="7" opacity="0.7" fill="#9a6b1a"/>
+            <ellipse cx="80"  cy="0" rx="22" ry="7" opacity="0.7" fill="#9a6b1a"/>
+            <ellipse cx="-56" cy="-56" rx="7" ry="20" transform="rotate(-45,-56,-56)" opacity="0.55" fill="#9a6b1a"/>
+            <ellipse cx="56"  cy="-56" rx="7" ry="20" transform="rotate(45,56,-56)"   opacity="0.55" fill="#9a6b1a"/>
+            <ellipse cx="-56" cy="56"  rx="7" ry="20" transform="rotate(45,-56,56)"   opacity="0.55" fill="#9a6b1a"/>
+            <ellipse cx="56"  cy="56"  rx="7" ry="20" transform="rotate(-45,56,56)"   opacity="0.55" fill="#9a6b1a"/>
+            <circle r="18" fill="#9a6b1a" opacity="0.8"/>
+            <circle r="24" stroke-width="1" opacity="0.6"/>
+          </g>
         </svg>
-      </div>
-
-      <div class="hero-cta">
-        <a href="pages/party-wear.html" class="btn-primary">Explore Collection</a>
+        <div class="hero-badge"><div class="hero-badge-deva">ज़</div></div>
+        <div class="hero-pills">
+          <span class="hero-pill">Straight Suits</span>
+          <span class="hero-pill">Anarkali</span>
+          <span class="hero-pill">Party Wear</span>
+        </div>
       </div>
     </section>
 
-    <section class="categories-grid">
-      <h2 class="section-title">Our Collections</h2>
-      <div class="grid">
-        <a href="pages/straight-suits.html" class="cat-card">
-          <div class="cat-icon">
-            <svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg"><rect x="18" y="5" width="24" height="70" rx="2" stroke="#9a6b1a" stroke-width="1" fill="none"/><line x1="18" y1="22" x2="42" y2="22" stroke="#9a6b1a" stroke-width="0.6" opacity="0.5"/></svg>
-          </div>
-          <span>Straight Suits</span>
-        </a>
-        <a href="pages/anarkali.html" class="cat-card">
-          <div class="cat-icon">
-            <svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg"><path d="M30,5 L15,75 L30,65 L45,75 Z" stroke="#9a6b1a" stroke-width="1" fill="none"/><line x1="22" y1="22" x2="38" y2="22" stroke="#9a6b1a" stroke-width="0.6" opacity="0.5"/></svg>
-          </div>
-          <span>Anarkali</span>
-        </a>
-        <a href="pages/long-kurtis.html" class="cat-card">
-          <div class="cat-icon">
-            <svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="5" width="20" height="65" rx="2" stroke="#9a6b1a" stroke-width="1" fill="none"/></svg>
-          </div>
-          <span>Long Kurtis</span>
-        </a>
-        <a href="pages/short-kurtis.html" class="cat-card">
-          <div class="cat-icon">
-            <svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="15" width="20" height="40" rx="2" stroke="#9a6b1a" stroke-width="1" fill="none"/></svg>
-          </div>
-          <span>Short Kurtis</span>
-        </a>
-        <a href="pages/aline-suits.html" class="cat-card">
-          <div class="cat-icon">
-            <svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg"><path d="M25,5 L12,75 L48,75 L35,5 Z" stroke="#9a6b1a" stroke-width="1" fill="none"/></svg>
-          </div>
-          <span>A-line Suits</span>
-        </a>
-        <a href="pages/party-wear.html" class="cat-card">
-          <div class="cat-icon">
-            <svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg"><path d="M30,5 L14,40 L22,40 L16,75 L44,75 L38,40 L46,40 Z" stroke="#9a6b1a" stroke-width="1" fill="none"/></svg>
-          </div>
-          <span>Party Wear</span>
-        </a>
+    <div class="marquee-strip">
+      <div class="marquee-inner">
+        <span>Straight Suits</span><span class="dot">✦</span><span>Anarkali</span><span class="dot">✦</span>
+        <span>Long Kurtis</span><span class="dot">✦</span><span>Short Kurtis</span><span class="dot">✦</span>
+        <span>A-line Suits</span><span class="dot">✦</span><span>Party Wear</span><span class="dot">✦</span>
+        <span>Straight Suits</span><span class="dot">✦</span><span>Anarkali</span><span class="dot">✦</span>
+        <span>Long Kurtis</span><span class="dot">✦</span><span>Short Kurtis</span><span class="dot">✦</span>
+        <span>A-line Suits</span><span class="dot">✦</span><span>Party Wear</span><span class="dot">✦</span>
+      </div>
+    </div>
+
+    <section class="collections">
+      <div class="section-header">
+        <p class="section-label">Browse by Style</p>
+        <h2 class="section-title">Our Collections</h2>
+      </div>
+      <div class="cat-grid">
+        <div class="cat-tile fade-up" onclick="navigate('straight-suits')">
+          <div class="cat-tile-art"><svg width="55" height="95" viewBox="0 0 55 95" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="6" width="31" height="83" rx="2" stroke="#9a6b1a" stroke-width="1.1" fill="none"/><line x1="12" y1="24" x2="43" y2="24" stroke="#9a6b1a" stroke-width="0.6" opacity="0.5"/><line x1="20" y1="42" x2="35" y2="42" stroke="#9a6b1a" stroke-width="0.5" opacity="0.35" stroke-dasharray="2,3"/></svg></div>
+          <div class="cat-tile-body"><div class="cat-tile-name">Straight Suits</div><div class="cat-tile-sub">Structured, timeless</div></div>
+          <div class="cat-tile-arrow">→</div>
+        </div>
+        <div class="cat-tile fade-up" onclick="navigate('anarkali')">
+          <div class="cat-tile-art"><svg width="65" height="95" viewBox="0 0 65 95" xmlns="http://www.w3.org/2000/svg"><path d="M32,6 L14,89 L32,78 L50,89 Z" stroke="#9a6b1a" stroke-width="1.1" fill="none"/><line x1="24" y1="24" x2="40" y2="24" stroke="#9a6b1a" stroke-width="0.6" opacity="0.5"/></svg></div>
+          <div class="cat-tile-body"><div class="cat-tile-name">Anarkali</div><div class="cat-tile-sub">Flowing &amp; regal</div></div>
+          <div class="cat-tile-arrow">→</div>
+        </div>
+        <div class="cat-tile fade-up" onclick="navigate('long-kurtis')">
+          <div class="cat-tile-art"><svg width="50" height="95" viewBox="0 0 50 95" xmlns="http://www.w3.org/2000/svg"><rect x="11" y="6" width="28" height="83" rx="3" stroke="#9a6b1a" stroke-width="1.1" fill="none"/><circle cx="25" cy="20" r="4" stroke="#9a6b1a" stroke-width="0.7" fill="none" opacity="0.5"/></svg></div>
+          <div class="cat-tile-body"><div class="cat-tile-name">Long Kurtis</div><div class="cat-tile-sub">Effortlessly refined</div></div>
+          <div class="cat-tile-arrow">→</div>
+        </div>
+        <div class="cat-tile fade-up" onclick="navigate('short-kurtis')">
+          <div class="cat-tile-art"><svg width="50" height="95" viewBox="0 0 50 95" xmlns="http://www.w3.org/2000/svg"><rect x="11" y="20" width="28" height="48" rx="3" stroke="#9a6b1a" stroke-width="1.1" fill="none"/><circle cx="25" cy="32" r="3.5" stroke="#9a6b1a" stroke-width="0.7" fill="none" opacity="0.5"/></svg></div>
+          <div class="cat-tile-body"><div class="cat-tile-name">Short Kurtis</div><div class="cat-tile-sub">Playful &amp; vibrant</div></div>
+          <div class="cat-tile-arrow">→</div>
+        </div>
+        <div class="cat-tile fade-up" onclick="navigate('aline-suits')">
+          <div class="cat-tile-art"><svg width="65" height="95" viewBox="0 0 65 95" xmlns="http://www.w3.org/2000/svg"><path d="M26,6 L8,89 L57,89 L42,6 Z" stroke="#9a6b1a" stroke-width="1.1" fill="none"/><line x1="25" y1="24" x2="42" y2="24" stroke="#9a6b1a" stroke-width="0.6" opacity="0.5"/></svg></div>
+          <div class="cat-tile-body"><div class="cat-tile-name">A-line Suits</div><div class="cat-tile-sub">Flattering every form</div></div>
+          <div class="cat-tile-arrow">→</div>
+        </div>
+        <div class="cat-tile fade-up" onclick="navigate('party-wear')">
+          <div class="cat-tile-art"><svg width="60" height="95" viewBox="0 0 60 95" xmlns="http://www.w3.org/2000/svg"><path d="M30,5 L16,40 L23,40 L16,89 L44,89 L37,40 L44,40 Z" stroke="#9a6b1a" stroke-width="1.1" fill="none"/><circle cx="30" cy="16" r="5" stroke="#9a6b1a" stroke-width="0.8" fill="none" opacity="0.6"/></svg></div>
+          <div class="cat-tile-body"><div class="cat-tile-name">Party Wear</div><div class="cat-tile-sub">Memorable evenings</div></div>
+          <div class="cat-tile-arrow">→</div>
+        </div>
       </div>
     </section>
-  </main>
 
-  <footer class="site-footer">
-    <div class="footer-logo">ज़ Zariya</div>
-    <p class="footer-tagline">Traditional Wear · Timeless Elegance</p>
-    <p class="footer-copy">&copy; 2026 Zariya Boutique. All rights reserved.</p>
-  </footer>
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <div class="footer-deva">ज़</div>
+        <div class="footer-name">Zariya</div>
+        <p>Heritage craftsmanship for the modern woman. Every piece tells a story of tradition and timeless beauty.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Collections</h4>
+          <ul>
+            <li><a onclick="navigate('straight-suits')">Straight Suits</a></li>
+            <li><a onclick="navigate('anarkali')">Anarkali</a></li>
+            <li><a onclick="navigate('long-kurtis')">Long Kurtis</a></li>
+            <li><a onclick="navigate('short-kurtis')">Short Kurtis</a></li>
+            <li><a onclick="navigate('aline-suits')">A-line Suits</a></li>
+            <li><a onclick="navigate('party-wear')">Party Wear</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Zariya</h4>
+          <ul><li><a onclick="navigate('home')">Home</a></li></ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">&copy; 2026 Zariya Boutique</span>
+        <span class="footer-ornament">ज़</span>
+      </div>
+    </footer>
+  </div><!-- /page-home -->
 
-  <script src="js/config.js"></script>
-  <script src="js/main.js"></script>
+  <!-- ══════════════════════════════════════
+       PAGE TEMPLATE: CATEGORY (rendered by JS)
+  ══════════════════════════════════════ -->
+  <div id="page-category" class="page">
+    <div class="page-banner">
+      <div class="banner-deva">ज़</div>
+      <div class="banner-content">
+        <p class="banner-label">Collection</p>
+        <h1 class="banner-title" id="catTitle"></h1>
+        <p class="banner-desc"  id="catDesc"></p>
+      </div>
+    </div>
+    <div class="breadcrumb">
+      <span class="bc-link" onclick="navigate('home')">Home</span>
+      <span>›</span>
+      <span id="catBreadcrumb"></span>
+    </div>
+    <section class="gallery-section">
+      <div class="gallery-meta" id="galleryMeta"></div>
+      <div id="galleryContainer"></div>
+    </section>
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <div class="footer-deva">ज़</div>
+        <div class="footer-name">Zariya</div>
+        <p>Heritage craftsmanship for the modern woman. Every piece tells a story of tradition and timeless beauty.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Collections</h4>
+          <ul>
+            <li><a onclick="navigate('straight-suits')">Straight Suits</a></li>
+            <li><a onclick="navigate('anarkali')">Anarkali</a></li>
+            <li><a onclick="navigate('long-kurtis')">Long Kurtis</a></li>
+            <li><a onclick="navigate('short-kurtis')">Short Kurtis</a></li>
+            <li><a onclick="navigate('aline-suits')">A-line Suits</a></li>
+            <li><a onclick="navigate('party-wear')">Party Wear</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Zariya</h4>
+          <ul><li><a onclick="navigate('home')">Home</a></li></ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">&copy; 2026 Zariya Boutique</span>
+        <span class="footer-ornament">ज़</span>
+      </div>
+    </footer>
+  </div><!-- /page-category -->
+
+  <!-- ── LIGHTBOX ── -->
+  <div id="zariyaLightbox" class="lightbox">
+    <button class="lb-close" onclick="closeLightbox()">&#215;</button>
+    <div class="lb-img-wrap" id="lbImgWrap">
+      <img id="lbImg" src="" alt=""/>
+      <div class="lb-controls">
+        <button class="lb-btn" onclick="shiftLb(-1)">&#8592;</button>
+        <button class="lb-btn" onclick="shiftLb(1)">&#8594;</button>
+      </div>
+    </div>
+    <div class="lb-footer">
+      <div id="lbCaption" class="lb-caption"></div>
+      <div id="lbCounter" class="lb-counter"></div>
+    </div>
+  </div>
+
+  <script>
+    // ── CONFIG ──────────────────────────────────────────────
+    const API_URL = "https://script.google.com/macros/s/AKfycbycOEQwOhqW8pq5BtmFhNUBmk2YLBe5zqoeu_asR-UF3gXwR8IAJ9oyDWbR9LSKSyZU/exec";
+
+    const CATEGORIES = {
+      'straight-suits': { label: 'Straight Suits',  desc: 'Elegant & structured silhouettes for every occasion' },
+      'anarkali':       { label: 'Anarkali',         desc: 'Flowing, graceful anarkali suits with timeless charm' },
+      'long-kurtis':    { label: 'Long Kurtis',      desc: 'Effortlessly chic long kurtis for a refined look' },
+      'short-kurtis':   { label: 'Short Kurtis',     desc: 'Playful and versatile short kurtis for everyday wear' },
+      'aline-suits':    { label: 'A-line Suits',     desc: 'Flattering A-line silhouettes that celebrate every form' },
+      'party-wear':     { label: 'Party Wear',       desc: 'Dazzling pieces crafted for your most memorable evenings' },
+    };
+
+    // ── ROUTER ─────────────────────────────────────────────
+    let currentPage = 'home';
+
+    function navigate(page) {
+      closeNav();
+      window.scrollTo(0, 0);
+
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
+      if (page === 'home') {
+        document.getElementById('page-home').classList.add('active');
+        currentPage = 'home';
+      } else {
+        const cat = CATEGORIES[page];
+        if (!cat) return;
+        document.getElementById('catTitle').textContent      = cat.label;
+        document.getElementById('catDesc').textContent       = cat.desc;
+        document.getElementById('catBreadcrumb').textContent = cat.label;
+        document.getElementById('page-category').classList.add('active');
+        loadGallery(page);
+        currentPage = page;
+      }
+
+      // Update active nav link
+      document.querySelectorAll('.nav-list a').forEach(a => {
+        a.classList.remove('active');
+        const onclick = a.getAttribute('onclick') || '';
+        if (onclick.includes(`'${page}'`)) a.classList.add('active');
+      });
+
+      // Update page title
+      document.title = page === 'home'
+        ? 'Zariya — Traditional Wear'
+        : `${CATEGORIES[page].label} — Zariya`;
+    }
+
+    // ── NAV ────────────────────────────────────────────────
+    function toggleNav() {
+      document.getElementById('navList').classList.toggle('open');
+    }
+    function closeNav() {
+      document.getElementById('navList').classList.remove('open');
+    }
+    document.addEventListener('click', e => {
+      const nav    = document.getElementById('navList');
+      const toggle = document.querySelector('.nav-toggle');
+      if (nav && toggle && !nav.contains(e.target) && !toggle.contains(e.target)) {
+        closeNav();
+      }
+    });
+
+    // ── FILENAME → CAPTION ─────────────────────────────────
+    function prettyName(raw) {
+      if (!raw) return '';
+      let name = raw.replace(/\.[^.]+$/, '').trim();
+
+      // WhatsApp: "WhatsApp Image 2026-04-21 at 00.01.24 (3)"
+      const wp = name.match(/WhatsApp\s+(?:Image|Video)\s+(\d{4}-\d{2}-\d{2})\s+at\s+(\d{2})\.(\d{2})\.(\d{2})(?:\s+\((\d+)\))?/i);
+      if (wp) {
+        const [,datePart,hh,mm,,copy] = wp;
+        const [y,m,d] = datePart.split('-');
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        const dateStr = `${parseInt(d)} ${months[parseInt(m)-1]} ${y}`;
+        return copy ? `Photo · ${dateStr} · ${hh}:${mm} (${copy})` : `Photo · ${dateStr} · ${hh}:${mm}`;
+      }
+
+      // Generic: underscores/hyphens → spaces → Title Case
+      return name.replace(/[_\-]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    // ── GALLERY LOADER ─────────────────────────────────────
+    async function loadGallery(categoryId) {
+      const container = document.getElementById('galleryContainer');
+      const metaEl    = document.getElementById('galleryMeta');
+      if (!container) return;
+
+      container.innerHTML = `
+        <div class="loading-state">
+          <div class="loading-spinner"></div>
+          <p class="loading-text">Loading collection…</p>
+        </div>`;
+      if (metaEl) metaEl.innerHTML = '';
+
+      try {
+        const res  = await fetch(`${API_URL}?category=${categoryId}`);
+        if (!res.ok) throw new Error(`Server returned ${res.status}`);
+        const data = await res.json();
+
+        if (data.error) throw new Error(data.error);
+
+        if (!data.images || data.images.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <p>No pieces in this collection yet.</p>
+              <p style="margin-top:0.5rem;opacity:0.55;font-size:0.78rem">Add images to your Google Drive folder — they appear here automatically.</p>
+            </div>`;
+          return;
+        }
+
+        if (metaEl) {
+          metaEl.innerHTML = `
+            <span class="gallery-count">${data.images.length} Piece${data.images.length !== 1 ? 's' : ''}</span>
+            <div class="gallery-divider"></div>`;
+        }
+
+        renderGallery(container, data.images);
+
+      } catch (err) {
+        container.innerHTML = `
+          <div class="error-state">
+            <h3>Could not load images</h3>
+            <p>${err.message}</p>
+            <p style="margin-top:0.6rem;opacity:0.55;font-size:0.72rem">Make sure your Apps Script is deployed with <em>Anyone</em> access.</p>
+          </div>`;
+      }
+    }
+
+    function renderGallery(container, images) {
+      const grid = document.createElement('div');
+      grid.className = 'image-grid';
+      images.forEach((img, i) => {
+        const caption = prettyName(img.name);
+        const card    = document.createElement('div');
+        card.className = 'image-card fade-up';
+        card.style.animationDelay = `${(i % 8) * 0.06}s`;
+        card.innerHTML = `
+          <img src="${img.url}" alt="${caption}" loading="lazy" onerror="this.parentElement.style.display='none'"/>
+          <div class="image-card-overlay">
+            <span class="image-card-caption">${caption}</span>
+          </div>`;
+        card.addEventListener('click', () => openLightbox(images, i));
+        grid.appendChild(card);
+      });
+      container.innerHTML = '';
+      container.appendChild(grid);
+    }
+
+    // ── LIGHTBOX ───────────────────────────────────────────
+    let _lbImages = [], _lbIndex = 0, _touchStartX = 0;
+
+    function openLightbox(images, index) {
+      _lbImages = images;
+      _lbIndex  = index;
+      updateLb();
+      document.getElementById('zariyaLightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function updateLb() {
+      const img = _lbImages[_lbIndex];
+      const el  = document.getElementById('lbImg');
+      el.style.opacity = '0.3';
+      el.src = img.url;
+      el.alt = prettyName(img.name);
+      el.onload = () => { el.style.transition = 'opacity 0.2s'; el.style.opacity = '1'; };
+      document.getElementById('lbCaption').textContent = prettyName(img.name);
+      document.getElementById('lbCounter').textContent = `${_lbIndex + 1} of ${_lbImages.length}`;
+    }
+
+    function shiftLb(dir) {
+      _lbIndex = (_lbIndex + dir + _lbImages.length) % _lbImages.length;
+      updateLb();
+    }
+
+    function closeLightbox() {
+      document.getElementById('zariyaLightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Swipe on lightbox
+    const lbWrap = document.getElementById('lbImgWrap');
+    lbWrap.addEventListener('touchstart', e => { _touchStartX = e.touches[0].clientX; }, { passive: true });
+    lbWrap.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - _touchStartX;
+      if (Math.abs(dx) > 50) shiftLb(dx < 0 ? 1 : -1);
+    }, { passive: true });
+
+    // Close lightbox on background tap
+    document.getElementById('zariyaLightbox').addEventListener('click', e => {
+      if (e.target === document.getElementById('zariyaLightbox')) closeLightbox();
+    });
+
+    // Keyboard
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('zariyaLightbox').classList.contains('active')) return;
+      if (e.key === 'ArrowRight') shiftLb(1);
+      if (e.key === 'ArrowLeft')  shiftLb(-1);
+      if (e.key === 'Escape')     closeLightbox();
+    });
+  </script>
 </body>
 </html>
