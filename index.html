@@ -33,13 +33,13 @@ button,a{-webkit-tap-highlight-color:transparent;}
 @keyframes pgEnter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── HEADER ── */
-.hdr{position:sticky;top:0;z-index:500;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 1.2rem;background:rgba(253,248,240,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--b2);}
+.hdr{position:sticky;top:0;z-index:500;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 1.2rem;background:rgba(253,248,240,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--b2);}
 .hdr::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent);}
 .logo{display:flex;align-items:center;gap:.5rem;cursor:pointer;}
-.logo-z{font-family:'Noto Serif Devanagari','Noto Serif',serif;font-size:2.2rem;color:var(--brown);line-height:1;}
+.logo-z{font-family:'Noto Serif Devanagari','Noto Serif',serif;font-size:2.4rem;color:var(--brown);line-height:1;}
 .logo-txt{border-left:1px solid var(--b3);padding-left:.55rem;}
-.logo-n{font-family:var(--ff-h);font-size:1.4rem;font-weight:600;color:var(--brown);letter-spacing:.06em;line-height:1;}
-.logo-s{font-family:var(--ff-u);font-size:.52rem;letter-spacing:.28em;color:var(--muted2);text-transform:uppercase;}
+.logo-n{font-family:var(--ff-h);font-size:1.5rem;font-weight:700;color:var(--brown);letter-spacing:.06em;line-height:1;}
+.logo-s{font-family:var(--ff-u);font-size:.55rem;letter-spacing:.28em;color:var(--muted2);text-transform:uppercase;}
 .burger{width:44px;height:44px;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
 .burger span{display:block;height:1.5px;background:var(--brown);transition:all .3s var(--ease);}
 .burger span:nth-child(1){width:20px;}
@@ -177,7 +177,7 @@ button,a{-webkit-tap-highlight-color:transparent;}
 .cat-hero-inner{position:relative;z-index:2;}
 .cat-kicker{font-family:var(--ff-u);font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.55rem;margin-bottom:.5rem;}
 .cat-kicker::before{content:'';display:block;width:16px;height:1px;background:var(--gold);}
-.cat-h1{font-family:var(--ff-h);font-size:clamp(2rem,8vw,3.2rem);font-weight:500;color:var(--cream);letter-spacing:.04em;line-height:1.1;margin-bottom:.3rem;}
+.cat-h1{font-family:var(--ff-h);font-size:clamp(2.2rem,9vw,3.8rem);font-weight:500;color:var(--cream);letter-spacing:.04em;line-height:1.1;margin-bottom:.3rem;}
 .cat-desc{font-family:var(--ff-b);font-size:.95rem;font-style:italic;color:rgba(250,236,200,.5);line-height:1.7;}
 /* Banner entrance */
 .cat-hero-inner{animation:bannerIn .6s var(--ease) both;}
@@ -204,7 +204,7 @@ button,a{-webkit-tap-highlight-color:transparent;}
 .img-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .6s var(--ease);}
 .img-num{position:absolute;top:.45rem;left:.45rem;width:20px;height:20px;border-radius:50%;background:rgba(200,153,42,.85);display:flex;align-items:center;justify-content:center;font-family:var(--ff-u);font-size:.48rem;font-weight:500;color:var(--brown);z-index:2;letter-spacing:0;}
 .img-info{padding:.65rem .75rem .75rem;background:var(--cream);border-top:2px solid var(--gold);flex:1;display:flex;flex-direction:column;gap:.12rem;}
-.img-name{font-family:var(--ff-h);font-size:1.15rem;font-weight:600;color:var(--brown);line-height:1.25;letter-spacing:.01em;}
+.img-name{font-family:var(--ff-h);font-size:1.2rem;font-weight:700;color:var(--brown);line-height:1.25;letter-spacing:.01em;}
 .img-sub{font-family:var(--ff-u);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);}
 
 /* loading */
@@ -253,7 +253,7 @@ button,a{-webkit-tap-highlight-color:transparent;}
 
 /* ── DESKTOP ── */
 @media(min-width:960px){
-  .hdr{padding:0 3.5rem;height:72px;}
+  .hdr{padding:0 3.5rem;height:76px;}
   .burger{display:none;}
   .drawer{display:none!important;}
   .dnav{display:flex;gap:2rem;align-items:center;}
@@ -419,52 +419,130 @@ button,a{-webkit-tap-highlight-color:transparent;}
       .tryon-wrap{padding:2.5rem 2rem 6rem;}
     }
 
-/* Skeleton loading */
+/* ── LOGO SHINE ── */
+@keyframes logoShine{
+  0%,100%{background-position:200% center}
+  50%{background-position:-200% center}
+}
+@keyframes logoPulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.7;transform:scale(1.06)}
+}
+@keyframes goldRing{
+  0%{box-shadow:0 0 0 0 rgba(200,153,42,.6)}
+  70%{box-shadow:0 0 0 12px rgba(200,153,42,0)}
+  100%{box-shadow:0 0 0 0 rgba(200,153,42,0)}
+}
+@keyframes shimmerText{
+  0%,100%{background-position:200% center}
+  50%{background-position:0% center}
+}
+.logo-z{
+  animation:logoPulse 3s ease-in-out infinite;
+  filter:drop-shadow(0 0 6px rgba(200,153,42,.35));
+}
+.logo-n{
+  background:linear-gradient(90deg,var(--brown) 0%,var(--gold) 40%,#fff8e0 50%,var(--gold) 60%,var(--brown) 100%);
+  background-size:300% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:shimmerText 5s ease-in-out infinite;
+}
+
+/* ── SKELETON ── */
 .skel-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;padding:.5rem 0;}
 .skel-card{border-radius:6px;overflow:hidden;border:1px solid var(--b1);}
-.skel-img{width:100%;aspect-ratio:3/4;background:linear-gradient(90deg,var(--cream2) 25%,var(--cream3) 50%,var(--cream2) 75%);background-size:200% 100%;animation:skelA 1.4s linear infinite;}
-.skel-txt{height:14px;margin:10px 10px 5px;border-radius:3px;background:linear-gradient(90deg,var(--cream2) 25%,var(--cream3) 50%,var(--cream2) 75%);background-size:200% 100%;animation:skelA 1.4s linear infinite .1s;}
-.skel-txt2{height:10px;width:55%;margin:0 10px 12px;border-radius:3px;background:linear-gradient(90deg,var(--cream2) 25%,var(--cream3) 50%,var(--cream2) 75%);background-size:200% 100%;animation:skelA 1.4s linear infinite .2s;}
+.skel-img{width:100%;aspect-ratio:3/4;animation:skelA 1.4s linear infinite;
+  background:linear-gradient(90deg,var(--cream2) 25%,var(--cream3) 50%,var(--cream2) 75%);background-size:200% 100%;}
+.skel-txt{height:14px;margin:10px 10px 5px;border-radius:3px;animation:skelA 1.4s .1s linear infinite;
+  background:linear-gradient(90deg,var(--cream2) 25%,var(--cream3) 50%,var(--cream2) 75%);background-size:200% 100%;}
+.skel-txt2{height:10px;width:55%;margin:0 10px 12px;border-radius:3px;animation:skelA 1.4s .2s linear infinite;
+  background:linear-gradient(90deg,var(--cream2) 25%,var(--cream3) 50%,var(--cream2) 75%);background-size:200% 100%;}
 @keyframes skelA{0%{background-position:200% 0}100%{background-position:-200% 0}}
 @media(min-width:580px){.skel-grid{grid-template-columns:repeat(3,1fr);}}
 @media(min-width:960px){.skel-grid{grid-template-columns:repeat(4,1fr);gap:.85rem;}}
 
-/* Contact page */
+/* ── CATEGORY BANNER SHINE ── */
+@keyframes bannerShine{
+  0%{left:-100%}100%{left:200%}
+}
+.cat-banner-shine{
+  position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(200,153,42,.08),transparent);
+  animation:bannerShine 3.5s ease-in-out infinite;pointer-events:none;z-index:3;
+}
+
+/* ── GALLERY CARD HOVER SHINE ── */
+.img-card::after{
+  content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
+  transition:none;pointer-events:none;
+}
+.img-card:hover::after{animation:bannerShine 1s ease-out 1 forwards;}
+
+/* ── GOLD DOT LOADER (replaces plain spinner) ── */
+@keyframes dotBounce{0%,80%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-10px);opacity:1}}
+.gold-dots{display:flex;gap:.5rem;justify-content:center;margin-bottom:.5rem;}
+.gold-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);animation:dotBounce 1.2s ease-in-out infinite;}
+.gold-dot:nth-child(2){animation-delay:.15s;}.gold-dot:nth-child(3){animation-delay:.3s;}
+
+/* ── CONTACT PAGE ── */
 .contact-hero{background:var(--brown);padding:3rem 1.4rem 2.5rem;position:relative;overflow:hidden;}
-.contact-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.contact-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(200,153,42,.08),transparent 60%);}
-.contact-hero-wm{position:absolute;right:-.5rem;bottom:-1rem;font-family:'Noto Serif Devanagari',serif;font-size:8rem;color:rgba(255,255,255,.04);line-height:1;user-select:none;}
+.contact-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.contact-hero-bg{position:absolute;inset:0;
+  background:radial-gradient(ellipse at 70% 30%,rgba(200,153,42,.08),transparent 60%);}
+.contact-hero-wm{position:absolute;right:-.5rem;bottom:-1rem;
+  font-family:'Noto Serif Devanagari',serif;font-size:8rem;color:rgba(255,255,255,.04);
+  line-height:1;user-select:none;}
 .contact-inner{position:relative;z-index:2;}
-.contact-kicker{font-family:var(--ff-u);font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.55rem;margin-bottom:.5rem;}
+.contact-kicker{font-family:var(--ff-u);font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--gold);display:flex;align-items:center;gap:.55rem;margin-bottom:.5rem;}
 .contact-kicker::before{content:'';display:block;width:16px;height:1px;background:var(--gold);}
-.contact-h1{font-family:var(--ff-h);font-size:clamp(2rem,8vw,3.2rem);font-weight:500;color:var(--cream);margin-bottom:.3rem;}
-.contact-sub{font-family:var(--ff-b);font-size:.95rem;font-style:italic;color:rgba(250,236,200,.5);line-height:1.7;}
+.contact-h1{font-family:var(--ff-h);font-size:clamp(2rem,8vw,3.2rem);font-weight:500;
+  color:var(--cream);margin-bottom:.3rem;}
+.contact-sub{font-family:var(--ff-b);font-size:.95rem;font-style:italic;
+  color:rgba(250,236,200,.5);line-height:1.7;}
 .contact-wrap{padding:2rem 1.2rem 4rem;}
-.contact-card{background:var(--cream2);border:1.5px solid var(--b2);border-radius:12px;overflow:hidden;margin-bottom:1rem;animation:pgEnter .45s var(--ease) both;}
+.contact-card{background:var(--cream2);border:1.5px solid var(--b2);border-radius:12px;
+  overflow:hidden;margin-bottom:1rem;animation:pgEnter .45s var(--ease) both;}
 .contact-card:nth-child(2){animation-delay:.12s;}.contact-card:nth-child(3){animation-delay:.24s;}
 .contact-card-head{background:var(--brown2);padding:1rem 1.2rem;display:flex;align-items:center;gap:.8rem;}
-.contact-card-icon{width:40px;height:40px;border-radius:50%;background:rgba(200,153,42,.2);border:1px solid rgba(200,153,42,.4);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.contact-card-icon{width:40px;height:40px;border-radius:50%;background:rgba(200,153,42,.2);
+  border:1px solid rgba(200,153,42,.4);display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;flex-shrink:0;}
 .contact-card-title{font-family:var(--ff-h);font-size:1.15rem;color:var(--gold-pale);font-weight:500;}
 .contact-card-body{padding:1.2rem;}
-.contact-phone-num{font-family:var(--ff-h);font-size:clamp(1.6rem,7vw,2.6rem);font-weight:700;color:var(--brown);letter-spacing:.04em;text-align:center;padding:1rem 0 .3rem;}
-.contact-phone-sub{font-family:var(--ff-u);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted2);text-align:center;margin-bottom:1.2rem;}
+.contact-phone-num{font-family:var(--ff-h);font-size:clamp(1.7rem,7vw,2.6rem);font-weight:700;
+  color:var(--brown);letter-spacing:.04em;text-align:center;padding:1rem 0 .3rem;}
+.contact-phone-sub{font-family:var(--ff-u);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted2);text-align:center;margin-bottom:1.2rem;}
 .contact-actions{display:flex;flex-direction:column;gap:.7rem;}
-.cbtn{display:flex;align-items:center;justify-content:center;gap:.6rem;height:54px;border-radius:8px;font-family:var(--ff-u);font-size:.82rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .2s,transform .15s;}
+.cbtn{display:flex;align-items:center;justify-content:center;gap:.6rem;height:54px;border-radius:8px;
+  font-family:var(--ff-u);font-size:.82rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  transition:opacity .2s,transform .15s;}
 .cbtn:active{transform:scale(.97);opacity:.85;}
 .cbtn-call{background:#25D366;color:#fff;}
 .cbtn-wa{background:#128C7E;color:#fff;}
 .cbtn-sms{background:var(--brown);color:var(--gold-pale);border:1.5px solid var(--b2);}
-.contact-row{display:flex;justify-content:space-between;align-items:center;padding:.65rem 0;border-bottom:1px solid var(--b1);}
+.contact-row{display:flex;justify-content:space-between;align-items:center;
+  padding:.65rem 0;border-bottom:1px solid var(--b1);}
 .contact-row:last-child{border-bottom:none;}
-.contact-row-lbl{font-family:var(--ff-u);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);}
+.contact-row-lbl{font-family:var(--ff-u);font-size:.65rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted2);}
 .contact-row-val{font-family:var(--ff-h);font-size:.95rem;color:var(--brown);}
 .contact-cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
-.ccatbtn{padding:.75rem;background:var(--cream3);border-radius:6px;cursor:pointer;font-family:var(--ff-h);font-size:.9rem;color:var(--brown);border:1px solid var(--b1);text-align:center;-webkit-tap-highlight-color:transparent;}
+.ccatbtn{padding:.75rem;background:var(--cream3);border-radius:6px;cursor:pointer;
+  font-family:var(--ff-h);font-size:.92rem;color:var(--brown);border:1px solid var(--b1);
+  text-align:center;-webkit-tap-highlight-color:transparent;transition:border-color .2s;}
 .ccatbtn:active{border-color:var(--gold);}
 .contact-quote{text-align:center;padding:1.5rem 1rem;}
 .contact-quote p{font-family:var(--ff-b);font-size:1.1rem;font-style:italic;color:var(--brown2);line-height:1.8;}
 .contact-quote-rule{width:40px;height:1.5px;background:var(--gold);margin:.8rem auto 0;}
-@media(min-width:960px){.contact-wrap{padding:3rem 3.5rem 6rem;max-width:800px;margin:0 auto;}.contact-actions{flex-direction:row;}.cbtn{flex:1;}}
+@media(min-width:960px){
+  .contact-wrap{padding:3rem 3.5rem 6rem;max-width:800px;margin:0 auto;}
+  .contact-actions{flex-direction:row;}.cbtn{flex:1;}
+}
 @keyframes mqRoll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 </style>
 </head>
@@ -882,7 +960,7 @@ button,a{-webkit-tap-highlight-color:transparent;}
 
     <!-- Processing -->
     <div class="tryon-processing" id="tryonProcessing">
-      <div class="proc-spinner"></div>
+      <div class="gold-dots"><div class="gold-dot"></div><div class="gold-dot"></div><div class="gold-dot"></div></div>
       <div class="proc-txt" id="procTxt">Generating your look…</div>
       <div class="proc-sub">This takes about 30–60 seconds</div>
       <div class="proc-steps">
@@ -943,39 +1021,33 @@ button,a{-webkit-tap-highlight-color:transparent;}
   </footer>
 </div>
 
-
 <!-- CONTACT PAGE -->
 <div id="page-contact" class="page">
   <div class="contact-hero">
     <div class="contact-hero-bg"></div>
+    <div class="cat-banner-shine"></div>
     <div class="contact-hero-wm">&#2332;&#2492;</div>
     <div class="contact-inner">
       <p class="contact-kicker">Reach Out</p>
       <h1 class="contact-h1">Contact Us</h1>
-      <p class="contact-sub">We would love to hear from you.</p>
+      <p class="contact-sub">We would love to hear from you &#8212; reach us anytime.</p>
     </div>
   </div>
   <div class="contact-wrap">
     <div class="contact-card">
-      <div class="contact-card-head">
-        <div class="contact-card-icon">&#128222;</div>
-        <div class="contact-card-title">Call or WhatsApp</div>
-      </div>
+      <div class="contact-card-head"><div class="contact-card-icon">&#128222;</div><div class="contact-card-title">Call or WhatsApp</div></div>
       <div class="contact-card-body">
         <div class="contact-phone-num">+49 179 4099 206</div>
         <div class="contact-phone-sub">Available for calls &amp; WhatsApp</div>
         <div class="contact-actions">
-          <a class="cbtn cbtn-call" href="tel:+491794099206">&#128222;&nbsp; Call Now</a>
-          <a class="cbtn cbtn-wa" href="https://wa.me/+491794099206?text=Hii!%20I%20found%20your%20boutique%20Zariya%20and%20I%20am%20interested%20in%20your%20traditional%20wear%20collection." target="_blank">&#128172;&nbsp; WhatsApp</a>
-          <a class="cbtn cbtn-sms" href="sms:+491794099206">&#9993;&nbsp; Send SMS</a>
+          <a class="cbtn cbtn-call" href="tel:+491794099206">&#128222;&nbsp;&nbsp;Call Now</a>
+          <a class="cbtn cbtn-wa" href="https://wa.me/491794099206?text=Hii!%20I%20found%20your%20boutique%20Zariya%20and%20I%20am%20interested%20in%20your%20traditional%20wear%20collection." target="_blank">&#128172;&nbsp;&nbsp;WhatsApp</a>
+          <a class="cbtn cbtn-sms" href="sms:+491794099206">&#9993;&nbsp;&nbsp;Send SMS</a>
         </div>
       </div>
     </div>
     <div class="contact-card">
-      <div class="contact-card-head">
-        <div class="contact-card-icon">&#128336;</div>
-        <div class="contact-card-title">Availability</div>
-      </div>
+      <div class="contact-card-head"><div class="contact-card-icon">&#128336;</div><div class="contact-card-title">Availability</div></div>
       <div class="contact-card-body">
         <div class="contact-row"><span class="contact-row-lbl">Mon &ndash; Fri</span><span class="contact-row-val">10:00 &ndash; 19:00</span></div>
         <div class="contact-row"><span class="contact-row-lbl">Saturday</span><span class="contact-row-val">11:00 &ndash; 17:00</span></div>
@@ -984,10 +1056,7 @@ button,a{-webkit-tap-highlight-color:transparent;}
       </div>
     </div>
     <div class="contact-card">
-      <div class="contact-card-head">
-        <div class="contact-card-icon">&#128248;</div>
-        <div class="contact-card-title">Browse Collections</div>
-      </div>
+      <div class="contact-card-head"><div class="contact-card-icon">&#128248;</div><div class="contact-card-title">Browse Collections</div></div>
       <div class="contact-card-body">
         <div class="contact-cat-grid">
           <div class="ccatbtn" onclick="go('straight-suits')">Straight Suits</div>
@@ -999,10 +1068,7 @@ button,a{-webkit-tap-highlight-color:transparent;}
         </div>
       </div>
     </div>
-    <div class="contact-quote">
-      <p>&ldquo;Every outfit tells a story &mdash; let us help you find yours.&rdquo;</p>
-      <div class="contact-quote-rule"></div>
-    </div>
+    <div class="contact-quote"><p>&ldquo;Every outfit tells a story &mdash; let us help you find yours.&rdquo;</p><div class="contact-quote-rule"></div></div>
   </div>
   <footer class="ft">
     <div class="ft-links">
@@ -1455,61 +1521,74 @@ function setStep(n,state){
   if(n>1){const line=document.getElementById('line'+(n-1)+n);if(line){line.style.background=state==='done'||state==='active'?'var(--gold)':'var(--b1)';}}
 }
 
-// ── AI Try-On: 6 engines PARALLEL — fastest wins ────────────
+// ── 6 AI engines running in parallel ───────────────────────
 function mkS(){return Math.random().toString(36).slice(2)+Date.now().toString(36);}
 
-async function callSp(url,data,ms){
-  const r=await fetch(url+'/run/predict',{
-    method:'POST',headers:{'Content-Type':'application/json'},
+function callSp(url,data,ms){
+  return fetch(url+'/run/predict',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
     signal:AbortSignal.timeout(ms||55000),
     body:JSON.stringify({fn_index:0,session_hash:mkS(),data:data})
+  }).then(function(r){
+    if(!r.ok)throw new Error(r.status);
+    return r.json().then(extractImg);
   });
-  if(!r.ok)throw new Error(url+' '+r.status);
-  return extractImg(await r.json());
 }
 
-async function queueSp(url,data,ms){
-  const sh=mkS();
-  const jr=await fetch(url+'/queue/join',{method:'POST',headers:{'Content-Type':'application/json'},signal:AbortSignal.timeout(15000),body:JSON.stringify({fn_index:0,session_hash:sh,data:data})});
-  if(!jr.ok)throw new Error('join '+jr.status);
-  const end=Date.now()+(ms||60000);
-  while(Date.now()<end){
-    await new Promise(r=>setTimeout(r,2000));
-    try{
-      const r=await fetch(url+'/queue/status?session_hash='+sh,{signal:AbortSignal.timeout(6000)});
-      const j=await r.json();
-      if(j.status==='complete'&&j.output)return extractImg(j.output);
-      if(j.status==='error')throw new Error('q-err');
-    }catch(e){if(e.message==='q-err')throw e;}
+function queueSp(url,data,ms){
+  var sh=mkS();
+  return fetch(url+'/queue/join',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    signal:AbortSignal.timeout(15000),
+    body:JSON.stringify({fn_index:0,session_hash:sh,data:data})
+  }).then(function(r){
+    if(!r.ok)throw new Error('join '+r.status);
+    return pollSp(url,sh,ms||60000);
+  });
+}
+
+function pollSp(url,sh,ms){
+  var end=Date.now()+ms;
+  function attempt(){
+    if(Date.now()>end)return Promise.reject(new Error('timeout'));
+    return new Promise(function(res){setTimeout(res,2000);})
+      .then(function(){
+        return fetch(url+'/queue/status?session_hash='+sh,{signal:AbortSignal.timeout(6000)});
+      })
+      .then(function(r){return r.json();})
+      .then(function(j){
+        if(j.status==='complete'&&j.output)return extractImg(j.output);
+        if(j.status==='error')throw new Error('q-err');
+        return attempt();
+      })
+      .catch(function(e){if(e.message==='q-err')throw e;return attempt();});
   }
-  throw new Error('timeout');
+  return attempt();
 }
 
-const TRYON_ENGINES=[
-  {call:(p,g,d)=>callSp('https://yisol-idm-vton.hf.space',[{data:p,name:'p.jpg',is_file:false},{data:g,name:'g.jpg',is_file:false},d,true,false,20,42],50000)},
-  {call:(p,g,d)=>queueSp('https://yisol-idm-vton.hf.space',[p,g,d,true,false,20,42],60000)},
-  {call:(p,g,d)=>callSp('https://kwai-kolors-kolors-virtual-try-on.hf.space',[{data:p,name:'p.jpg',is_file:false},{data:g,name:'g.jpg',is_file:false}],55000)},
-  {call:(p,g,d)=>callSp('https://zhengchong-catvton.hf.space',[{data:p,name:'p.jpg',is_file:false},{data:g,name:'g.jpg',is_file:false},'upper_body','none'],50000)},
-  {call:(p,g,d)=>callSp('https://levihsu-ootdiffusion.hf.space',[{data:p,name:'p.jpg',is_file:false},{data:g,name:'g.jpg',is_file:false},'Upper-body',1,20],55000)},
-  {call:(p,g,d)=>callSp('https://yisol-idm-vton-dc.hf.space',[{data:p,name:'p.jpg',is_file:false},{data:g,name:'g.jpg',is_file:false},d,true,false,20,42],55000)},
+// 6 different free AI models
+var TRYON_ENGINES=[
+  // 1: IDM-VTON direct
+  {call:function(p,g,d){return callSp('https://yisol-idm-vton.hf.space',[{data:p,name:'p.jpg',is_file:false},{data:g,name:'g.jpg',is_file:false},d,true,false,20,42],50000);}},
+  // 2: IDM-VTON queue (handles busy server)
+  {call:function(p,g,d){return queueSp('https://yisol-idm-vton.hf.space',[p,g,d,true,false,20,42],65000);}},
+  // 3: Kolors Virtual Try-On
+  {call:function(p,g,d){return callSp('https://kwai-kolors-kolors-virtual-try-on.hf.space',[{data:p,name:'p.jpg',is_file:false},{data:g,name:'g.jpg',is_file:false}],55000);}},
+  // 4: CatVTON
+  {call:function(p,g,d){return callSp('https://zhengchong-catvton.hf.space',[{data:p,name:'p.jpg',is_file:false},{data:g,name:'g.jpg',is_file:false},'upper_body','none'],50000);}},
+  // 5: OOTDiffusion
+  {call:function(p,g,d){return callSp('https://levihsu-ootdiffusion.hf.space',[{data:p,name:'p.jpg',is_file:false},{data:g,name:'g.jpg',is_file:false},'Upper-body',1,20],55000);}},
+  // 6: IDM-VTON mirror instance
+  {call:function(p,g,d){return callSp('https://yisol-idm-vton-dc.hf.space',[{data:p,name:'p.jpg',is_file:false},{data:g,name:'g.jpg',is_file:false},d,true,false,20,42],55000);}},
 ];
 
-function extractImg(json){
-  // Try multiple response shapes from different Gradio versions
-  const data = json.data || json.output?.data || [];
-  for(const d of data){
-    if(typeof d === 'string' && d.startsWith('data:')) return d;
-    if(d && d.url && d.url.startsWith('http')) return d.url;
-    if(d && d.data && typeof d.data === 'string') return d.data;
-    if(d && typeof d === 'object' && d.path) return 'https://yisol-idm-vton.hf.space/file='+d.path;
-  }
-  throw new Error('No image in response');
-}
 
 async function runTryon(){
   if(!personB64){alert('Please upload your photo first.');return;}
   if(!garmentB64){
-    document.getElementById('tryonErrorMsg').innerHTML='<strong>Please select a suit from the dropdown above.</strong><br/>The garment photo loads automatically.';
+    document.getElementById('tryonErrorMsg').innerHTML='<strong>Please select a suit from the dropdown above.</strong><br/>The garment photo loads automatically when you pick a suit.';
     document.getElementById('tryonError').classList.add('show');
     return;
   }
@@ -1518,28 +1597,29 @@ async function runTryon(){
   document.getElementById('tryonProcessing').classList.add('show');
   document.getElementById('tryonBtn').disabled=true;
   setStep(3,'active');
-  const procSteps=['ps1','ps2','ps3','ps4'];
-  let si=0;
-  const stepInt=setInterval(()=>{
+  var procSteps=['ps1','ps2','ps3','ps4'];
+  var si=0;
+  var stepInt=setInterval(function(){
     if(si<procSteps.length)document.getElementById(procSteps[si++]).classList.add('done');
   },3000);
-  const desc=document.getElementById('suitName').value||'Traditional Indian kurta suit';
-  updateProcLabel('Finding the best styling engine\u2026');
-  let imgSrc=null,lastErr=null;
+  var desc=document.getElementById('suitName').value||'Traditional Indian kurta suit';
+  updateProcLabel('Finding best styling engine…');
+  var imgSrc=null;
+  var lastErr=null;
   try{
-    imgSrc=await Promise.any(TRYON_ENGINES.map(e=>e.call(personB64,garmentB64,desc)));
+    imgSrc=await Promise.any(TRYON_ENGINES.map(function(e){return e.call(personB64,garmentB64,desc);}));
   }catch(agg){
     lastErr=agg;
-    for(let i=0;i<2;i++){
+    for(var i=0;i<2;i++){
       try{
-        updateProcLabel('Trying once more\u2026');
+        updateProcLabel('Trying again…');
         imgSrc=await TRYON_ENGINES[i].call(personB64,garmentB64,desc);
         if(imgSrc)break;
       }catch(e2){lastErr=e2;}
     }
   }
   clearInterval(stepInt);
-  procSteps.forEach(s=>document.getElementById(s).classList.add('done'));
+  procSteps.forEach(function(s){document.getElementById(s).classList.add('done');});
   document.getElementById('tryonProcessing').classList.remove('show');
   if(imgSrc){
     document.getElementById('resultImg').src=imgSrc;
@@ -1547,11 +1627,11 @@ async function runTryon(){
     document.getElementById('tryonResult').classList.add('show');
     setStep(3,'done');
     resultBlob=imgSrc;
-    setTimeout(()=>document.getElementById('tryonResult').scrollIntoView({behavior:'smooth',block:'start'}),200);
+    setTimeout(function(){document.getElementById('tryonResult').scrollIntoView({behavior:'smooth',block:'start'});},200);
   }else{
     document.getElementById('tryonBtn').disabled=false;
     setStep(3,'');
-    document.getElementById('tryonErrorMsg').innerHTML='<strong>Our styling service is busy right now.</strong><br/>Please try again in a minute or contact us on WhatsApp!';
+    document.getElementById('tryonErrorMsg').innerHTML='<strong>Our styling service is busy right now.</strong><br/>Please try again in a minute, or contact us on WhatsApp!';
     document.getElementById('tryonError').classList.add('show');
   }
 }
